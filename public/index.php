@@ -72,8 +72,6 @@ function menu() {
     }
     return $menuItems;
 }
-// $app->get("/feed[.xml]", [Yafai\Pages::class, "rss"]);
-
 
 $app->get("/post/[{post}]", function (Request $request, Response $response, $args) {
     $post = $args["post"] ?? null;
