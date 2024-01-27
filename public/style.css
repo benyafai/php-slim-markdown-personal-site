@@ -1,0 +1,17 @@
+body {
+    font-family: sans-serif;
+}
+div.container {
+    width: 90vw;
+    max-width: 40em;
+    margin-inline: auto;
+}
+img {
+    max-width: 100%;
+}
+nav a {
+    margin-inline-end: 1em;
+}
+div.recent a {
+    margin-inline-start: 1em;
+}
