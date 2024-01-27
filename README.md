@@ -1,5 +1,7 @@
 # Personal Site based on Markdown posts.
 
+![ScreenShot](https://raw.githubusercontent.com/benyafai/php-slim-markdown-personal-site/master/screenshot.png)
+
 The site is driven by PHP using the [Slim Framework](https://www.slimframework.com/docs/v4/)
 
 You can enter your static pages into the /pages folder and they'll be available at yoursite.com/pagename
