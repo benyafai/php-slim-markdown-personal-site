@@ -9,9 +9,16 @@ use \Parsedown as Parsedown;
 require __DIR__ . "./../vendor/autoload.php";
 
 $app = AppFactory::create();
-$app->addErrorMiddleware(true, true, true);
 
-function getPosts($all = false) { 
+$app->addRoutingMiddleware();
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
+$errorHandler->registerErrorRenderer('text/html', function() {
+    echo '404';
+    exit();
+});
+
+function getPosts($all = false) {
     $path = "./../posts";
     $files = array_diff(scandir($path), array(".", ".."));
     $allPosts = [];
