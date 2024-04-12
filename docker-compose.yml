@@ -5,7 +5,10 @@ services:
       dockerfile: .docker/Dockerfile
     restart: always
     volumes:
-      - .:/var/www/html
+      - ./layouts:/var/www/html/layouts
+      - ./pages:/var/www/html/pages
+      - ./posts:/var/www/html/posts
+      - ./public:/var/www/html/public
     ports:
       - 8003:80
     networks:
