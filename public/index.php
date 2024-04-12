@@ -86,12 +86,13 @@ $app->get("/post/[{post}]", function (Request $request, Response $response, $arg
 
 $app->get("/[{page}]", function (Request $request, Response $response, $args) {
     $page = isset($args["page"]) ? strtolower($args["page"])  : "index";
+    $showAllPosts = $page == "index" ? true : false;
     $page = file_exists("./../pages/$page.md") ? parseFile("./../pages/", $page . ".md") : false;
     return (new PhpRenderer("./../layouts"))->render($response, "layout.php", [
         "content" => $page,
         "type" => "page",
         "menus" => menu(),
-        "allPosts" => getPosts(),
+        "allPosts" => $showAllPosts ? getPosts() : null,
     ]);
 });
 

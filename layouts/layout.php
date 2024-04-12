@@ -33,13 +33,15 @@
         <?php endif; // $content ?>
 
         <!-- Recent Blog Posts -->
-        <hr />
-        <div class="recent">
-            <h2>Recent Posts</h2>
-            <?php foreach ($allPosts as $recent): ?>
-                <p><?=date("Y-m-d", $recent->modified)?> <a href="/post/<?=$recent->file?>"><?=$recent->title?></a></p>
-            <?php endforeach; // $allPosts ?>
-        </div>
+        <?php if ($allPosts): ?>
+            <hr />
+            <div class="recent">
+                <h2>Recent Posts</h2>
+                <?php foreach ($allPosts as $recent): ?>
+                    <p><?=date("Y-m-d", $recent->modified)?> <a href="/post/<?=$recent->file?>"><?=$recent->title?></a></p>
+                <?php endforeach; // $allPosts ?>
+            </div>
+        <?php endif; // $allPosts ?>
     </div>
 </body>
 </html>
