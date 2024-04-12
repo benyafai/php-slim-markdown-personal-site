@@ -1,0 +1,15 @@
+services:
+  personalsite:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    restart: always
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8003:80
+    networks:
+      - cloudflare
+networks:
+  cloudflare:
+    external: true
