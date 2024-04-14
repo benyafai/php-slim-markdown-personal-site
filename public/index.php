@@ -104,7 +104,7 @@ $app->get("/feed", function (Request $request, Response $response, $args) {
         foreach ($posts as $post) {
             $rss .= "
         <item>
-            <title>" . $post->postMeta->Title . "</title>
+            <title>" . $post->title . "</title>
             <pubDate>" . date("r", $post->modified) . "</pubDate>
             <link>https://" . $_SERVER["HTTP_HOST"] . "/" . $post->file . "</link>
             <description>" . str_replace("<", "&lt;", str_replace(">", "&gt;", $post->markdown)) . "</description>
