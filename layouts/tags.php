@@ -17,15 +17,30 @@
             <?php endforeach; // $menus ?>
         </nav>
 
-        <!-- Recent Blog Posts for this Tag -->
-        <?php if ($allPosts): ?>
-            <hr />
+        <?php if ($tag && $allPosts->posts): ?>
             <div class="recent">
-                <h2>Recent Posts for tag: "<?=$tag?>"</h2>
-                <?php foreach ($allPosts as $recent): ?>
+                <h1>Tag: <?=$tag?></h1>
+                <?php foreach ($allPosts->posts as $recent): ?>
                     <p><?=date("Y-m-d", $recent->modified)?> <a href="/post/<?=$recent->file?>"><?=$recent->title?></a></p>
                 <?php endforeach; // $allPosts ?>
             </div>
+        <?php else: // $tag ?>
+            <div>
+                <h1>Tags</h1>
+                <?php foreach ($allPosts->tags as $thisTag): ?>
+                    <h3><a href="/tags/<?=$thisTag?>"><?=$thisTag?></a></h3>
+                    <?php foreach ($allPosts->posts as $recent): ?>
+                        <?php if (isset($recent->tags) && in_array($thisTag, $recent->tags)): ?>
+                            <p><?=date("Y-m-d", $recent->modified)?> <a href="/post/<?=$recent->file?>"><?=$recent->title?></a></p>
+                        <?php endif; // this tag ?>
+                    <?php endforeach; // $allPosts ?>
+                <?php endforeach; // $allPosts ?>
+            </div>
+        <?php endif; // $tag ?>
+
+        <!-- Recent Blog Posts for this Tag -->
+        <?php if ($allPosts): ?>
+
         <?php endif; // $allPosts ?>
     </div>
 </body>

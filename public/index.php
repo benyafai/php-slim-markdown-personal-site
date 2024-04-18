@@ -32,9 +32,13 @@ function getPosts($all = false, $tag = '') {
     $path = "./../posts";
     $files = array_diff(scandir($path), array(".", ".."));
     $allPosts = [];
+    $allTags = [];
     foreach ($files as $file) {
         if (!is_dir("$path/$file")) {
             $post = parseFile($path, $file);
+            if (isset($post->tags)) {
+                $allTags = array_unique(array_merge($post->tags, $allTags), SORT_REGULAR);
+            }
             if (isset($post->draft) && $post->draft == "true") {
                 continue;
             } elseif ($tag != '' && isset($post->tags) && !in_array($tag, $post->tags)) {
@@ -45,10 +49,17 @@ function getPosts($all = false, $tag = '') {
         }
     }
     krsort($allPosts);
+    krsort($allTags);
     if ($all) {
-        return $allPosts;
+        return (object) [
+            "posts" => $allPosts,
+            "tags" => $allTags,
+        ];
     }
-    return array_slice($allPosts, 0, 5, true);
+    return (object) [
+        "posts" => array_slice($allPosts, 0, 5, true),
+        "tags" => $allTags,
+    ];
 }
 
 function parseFile($path, $file) {
@@ -127,7 +138,7 @@ $app->get("/feed", function (Request $request, Response $response, $args) {
         return $response->withHeader("Content-Type", "application/xml");
 });
 
-$app->get("/tags/{tag}", function (Request $request, Response $response, $args) {
+$app->get("/tags[/{tag}]", function (Request $request, Response $response, $args) {
     return (new PhpRenderer("./../layouts"))->render($response, "tags.php", [
         "content" => $post,
         "type" => "post",

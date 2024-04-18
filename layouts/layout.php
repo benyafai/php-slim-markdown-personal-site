@@ -36,11 +36,11 @@
         <?php endif; // $content ?>
 
         <!-- Recent Blog Posts -->
-        <?php if ($allPosts): ?>
+        <?php if ($allPosts->posts): ?>
             <hr />
             <div class="recent">
                 <h2>Recent Posts</h2>
-                <?php foreach ($allPosts as $recent): ?>
+                <?php foreach ($allPosts->posts as $recent): ?>
                     <p><?=date("Y-m-d", $recent->modified)?> <a href="/post/<?=$recent->file?>"><?=$recent->title?></a></p>
                 <?php endforeach; // $allPosts ?>
             </div>
