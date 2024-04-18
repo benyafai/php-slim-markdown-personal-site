@@ -28,7 +28,7 @@ $errorMiddleware->setErrorHandler(\Slim\Exception\HttpNotFoundException::class, 
     ]);
 });
 
-function getPosts($all = false) {
+function getPosts($all = false, $tag = '') {
     $path = "./../posts";
     $files = array_diff(scandir($path), array(".", ".."));
     $allPosts = [];
@@ -36,6 +36,8 @@ function getPosts($all = false) {
         if (!is_dir("$path/$file")) {
             $post = parseFile($path, $file);
             if (isset($post->draft) && $post->draft == "true") {
+                continue;
+            } elseif ($tag != '' && isset($post->tags) && !in_array($tag, $post->tags)) {
                 continue;
             } else {
                 $allPosts[$post->modified] = $post;
@@ -47,7 +49,6 @@ function getPosts($all = false) {
         return $allPosts;
     }
     return array_slice($allPosts, 0, 5, true);
-
 }
 
 function parseFile($path, $file) {
@@ -62,6 +63,13 @@ function parseFile($path, $file) {
             list($fullString, $metaKey, $metaValue) = $meta_array;
             $postMeta->$metaKey = $metaValue;
             unset($meta[$key]);
+        }
+        if ($postMeta->tags) {
+            $postMeta->tags = array_map('trim', explode(",", $postMeta->tags));
+            $postMeta->tagsFormatted = [];
+            foreach ($postMeta->tags as $key => $tag) {
+                $postMeta->tagsFormatted[] = "<a href=\"/tags/$tag\">$tag</a>";
+            }
         }
         $post = substr($post, $endOfMeta + 3);
     }
@@ -117,6 +125,16 @@ $app->get("/feed", function (Request $request, Response $response, $args) {
 </rss>";
         $response->getBody()->write($rss);
         return $response->withHeader("Content-Type", "application/xml");
+});
+
+$app->get("/tags/{tag}", function (Request $request, Response $response, $args) {
+    return (new PhpRenderer("./../layouts"))->render($response, "tags.php", [
+        "content" => $post,
+        "type" => "post",
+        "menus" => menu(),
+        "tag" => $args["tag"],
+        "allPosts" => getPosts(true, $args["tag"]),
+    ]);
 });
 
 $app->get("/post/[{post}]", function (Request $request, Response $response, $args) {

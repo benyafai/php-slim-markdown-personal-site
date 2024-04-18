@@ -17,29 +17,11 @@
             <?php endforeach; // $menus ?>
         </nav>
 
-        <!-- Main Content -->
-        <?php if ($content): ?>
-            <?php if (strtolower($content->title) != 'index'): ?>
-                <h1><?=$content->title?></h1>
-            <?php endif; ?>
-            <?php if ($type == 'post'): ?>
-                <p><?=$content->date?><p>
-                <?php if ($content->tags): ?>
-                    <p><small>Tags: <?=implode(', ', $content->tagsFormatted)?></small>
-                <?php endif; // $content->tags ?>
-                <hr />
-            <?php endif; // $type == 'post' ?>
-            <?=$content->markdown?>
-        <?php else: // $content ?>
-            <h1>404</h1>
-            <p>This page could not be found!</p>
-        <?php endif; // $content ?>
-
-        <!-- Recent Blog Posts -->
+        <!-- Recent Blog Posts for this Tag -->
         <?php if ($allPosts): ?>
             <hr />
             <div class="recent">
-                <h2>Recent Posts</h2>
+                <h2>Recent Posts for tag: "<?=$tag?>"</h2>
                 <?php foreach ($allPosts as $recent): ?>
                     <p><?=date("Y-m-d", $recent->modified)?> <a href="/post/<?=$recent->file?>"><?=$recent->title?></a></p>
                 <?php endforeach; // $allPosts ?>
