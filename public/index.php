@@ -120,7 +120,7 @@ $app->get("/feed", function (Request $request, Response $response, $args) {
         <description>RSS for My Website</description>
         <language>en-gb</language>";
         $posts = getPosts(true);
-        foreach ($posts as $post) {
+        foreach ($posts->posts as $post) {
             $rss .= "
         <item>
             <title>" . $post->title . "</title>
