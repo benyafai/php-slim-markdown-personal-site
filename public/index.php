@@ -41,6 +41,8 @@ function getPosts($all = false, $tag = '') {
             }
             if (isset($post->draft) && $post->draft == "true") {
                 continue;
+            } elseif ($post->modified > time()) {
+                continue;
             } elseif ($tag != '' && isset($post->tags) && !in_array($tag, $post->tags)) {
                 continue;
             } else {
