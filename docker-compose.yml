@@ -8,6 +8,7 @@ services:
       - ./layouts:/var/www/html/layouts
       - ./pages:/var/www/html/pages
       - ./posts:/var/www/html/posts
+      - ./src:/var/www/html/src
       - ./public:/var/www/html/public
     ports:
       - 8003:80
