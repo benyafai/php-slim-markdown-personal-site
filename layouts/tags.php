@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=isset($content->title) && strtolower($content->title) != 'index' ? "$content->title | " : null?>My Website</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
+<?php include __DIR__ . "/header.php" ?>
 <body>
     <div class="container">
 
