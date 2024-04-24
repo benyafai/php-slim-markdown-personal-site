@@ -64,7 +64,7 @@ function parseFile($path, $file): ?object
         $post = substr($post, $endOfMeta + 3);
     }
     $modified = isset($postMeta->date) ? strtotime($postMeta->date) : filemtime("$path/$file");
-    $markdown = (new Parsedown)->text($post);
+    $markdown = (new \ParsedownExtra)->text($post);
     $markdown = str_replace("href=\"/", "href=\"https://" . $_SERVER["HTTP_HOST"] . "/", $markdown);
     $return = $postMeta ?? new StdClass();
     $return->modified = $modified;
