@@ -18,6 +18,11 @@ $app->get("/feed", function (Request $request, Response $response, $args) {
     return $response->withHeader("Content-Type", "application/xml");
 });
 
+$app->get("/json", function (Request $request, Response $response, $args) {
+    $response->getBody()->write(json());
+    return $response->withHeader("Content-Type", "application/json");
+});
+
 $app->get("/tags[/{tag}]", function (Request $request, Response $response, $args) {
     return (new PhpRenderer("./../layouts"))->render($response, "tags.php", [
         "content" => $post,
