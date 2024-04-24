@@ -2,6 +2,7 @@
     "require": {
         "slim/slim": "^4.12",
         "erusev/parsedown": "^1.7",
+        "erusev/parsedown-extra": "^0.8.1",
         "slim/psr7": "^1.6",
         "slim/php-view": "^3.2"
     }
