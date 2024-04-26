@@ -85,6 +85,11 @@ function menu(): array
     foreach ($menuFile as $item) {
         if (file_exists("./../pages/" . $item)) {
             $menuItems[] = parseFile("./../pages", $item);
+        } elseif (strpos($item, 'http') !== false) {
+            $link = new \StdClass();
+            $link->file = $item;
+            $link->title = preg_replace('/https{0,1}:\/\/(.*)/', "$1", $item);
+            $menuItems[] = $link;
         } else {
             $link = new \StdClass();
             $link->file = $item;
