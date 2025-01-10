@@ -1,10 +1,10 @@
-FROM composer:latest as build-stage
+FROM composer:latest AS build-stage
 COPY ./ /src
 WORKDIR /src
 RUN composer update
 RUN composer install --no-dev
 
-FROM php:8-apache as production-stage
+FROM php:8-apache AS production-stage
 COPY --from=build-stage /src /src
 
 RUN rm -rf /var/www/html && mv /src /var/www/html && \
