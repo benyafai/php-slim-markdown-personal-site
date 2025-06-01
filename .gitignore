@@ -1,2 +1,3 @@
 /vendor/
 docker-compose.local.yml
+.DS_Store
